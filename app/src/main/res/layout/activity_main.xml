@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- single list item in home page -->
+    <TextView
+        android:id="@+id/text_today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_today_24dp"
+        android:drawableLeft="@drawable/ic_today_24dp"
+        android:drawablePadding="@dimen/text_view_drawable_padding"
+        android:gravity="center_vertical"
+        android:onClick="showTasksForToday"
+        android:padding="20dp"
+        android:text="@string/today_btn_text"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+    <TextView
+        android:id="@+id/text_starred"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_star_24dp"
+        android:drawableLeft="@drawable/ic_star_24dp"
+        android:drawablePadding="@dimen/text_view_drawable_padding"
+        android:gravity="center_vertical"
+        android:onClick="showTasksForStarred"
+        android:padding="20dp"
+        android:text="@string/starred_btn_text"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="48dp" />
+
+    <TextView
+        android:id="@+id/text_all_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_list_add_check_24dp"
+        android:drawableLeft="@drawable/ic_list_add_check_24dp"
+        android:drawablePadding="@dimen/text_view_drawable_padding"
+        android:gravity="center_vertical"
+        android:onClick="showAllTasks"
+        android:padding="20dp"
+        android:text="@string/all_tasks_btn_text"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="88dp" />
+
+</LinearLayout>
