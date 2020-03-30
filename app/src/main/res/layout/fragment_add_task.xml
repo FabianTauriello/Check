@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/frag_task_top_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/frag_task_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/add_task_title_hint"
+            android:inputType="text" />
+
+        <ImageButton
+            android:id="@+id/frag_task_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/add_task_btn_description"
+            app:srcCompat="@drawable/ic_add_task_dialog" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frag_task_bottom_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frag_task_top_section">
+
+        <TextView
+            android:id="@+id/frag_task_due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_due_date"
+            android:drawableLeft="@drawable/ic_due_date"
+            android:text="Set due date" />
+
+        <TextView
+            android:id="@+id/frag_task_reminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_remind_me"
+            android:drawableLeft="@drawable/ic_remind_me"
+            android:text="@string/add_task_remind_me_text_label" />
+
+        <TextView
+            android:id="@+id/frag_task_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_repeat"
+            android:drawableLeft="@drawable/ic_repeat"
+            android:text="@string/add_task_repeat_text_label" />
+
+    </LinearLayout>
+
+</RelativeLayout>

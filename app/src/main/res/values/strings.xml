@@ -1,14 +1,23 @@
 <resources>
     <string name="app_name">Check</string>
 
-    <!--home page button descriptions-->
+    <!-- activity_main layout -->
     <string name="today_icon_description">Today icon</string>
     <string name="starred_icon_description">Starred icon</string>
     <string name="all_tasks_icon_description">All Tasks icon</string>
-
-    <!--home page button labels-->
     <string name="today_btn_text">Today</string>
     <string name="starred_btn_text">Starred</string>
     <string name="all_tasks_btn_text">All Tasks</string>
+    <string name="title_activity_tasks">TasksActivity</string>
+
+    <!-- activity_tasks layout -->
+    <string name="add_task_title_hint">Add a task</string>
+    <string name="add_task_btn_description">Add task arrow</string>
+    <string name="add_task_remind_me_text_label">Remind me</string>
+    <string name="add_task_repeat_text_label">Repeat</string>
+
+
+    <string name="no_tasks">No Tasks</string>
+
 
 </resources>
