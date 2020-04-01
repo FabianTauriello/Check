@@ -37,6 +37,10 @@ public class TaskRepository {
         return allTasks;
     }
 
+    public LiveData<List<Task>> getStarredTasks() {
+        return taskDAO.getStarredTasks();
+    }
+
     /**
      * Use an AsyncTask to call insert() on a non-UI thread, or the app will crash.
      * Room ensures that there aren't any long-running operations on the main thread, which would block the UI.

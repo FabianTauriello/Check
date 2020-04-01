@@ -1,5 +1,8 @@
 package io.github.fabiantauriello.check;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -15,12 +18,12 @@ import java.io.Serializable;
  */
 
 @Entity(tableName = "task_table")
-public class Task implements Serializable {
+public class Task implements Parcelable {
 
     // Member variables
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int id = 1;
 
     @NonNull
     private String title;
@@ -38,17 +41,91 @@ public class Task implements Serializable {
 
     private boolean repeat;
 
+    private boolean isStarred;
+
+    public int getMyDayDay() {
+        return myDayDay;
+    }
+
+    public int getMyDayMonth() {
+        return myDayMonth;
+    }
+
+    public int getMyDayYear() {
+        return myDayYear;
+    }
+
+    // These value will be used to see if this task should be shown in the "My Day" list.
+    // Each time the app is opened and data is loaded, these values will be checked with the current date
+    // and if they match, the task will be included in the "My Day" section. If these values are null
+    // or don't match the current date, the task will NOT be included in the "My Day" section.
+    private int myDayDay;
+    private int myDayMonth;
+    private int myDayYear;
+
     /**
      * Constructor with everything
      * Creates a new io.github.fabiantauriello.check.Task with the given arguments
      */
-    public Task(String title, String note, int dueDateDay, int dueDateMonth, int dueDateYear, boolean repeat) {
+    public Task(String title, String note, int dueDateDay, int dueDateMonth, int dueDateYear, boolean repeat, boolean isStarred,
+                int myDayDay, int myDayMonth, int myDayYear) {
         this.title = title;
         this.note = note;
         this.dueDateDay = dueDateDay;
         this.dueDateMonth = dueDateMonth;
         this.dueDateYear = dueDateYear;
         this.repeat = repeat;
+        this.isStarred = isStarred;
+        this.myDayDay = myDayDay;
+        this.myDayMonth = myDayMonth;
+        this.myDayYear = myDayYear;
+    }
+
+
+    public Task(Parcel source) {
+        // the order needs to be the same as in writeToParcel() method
+        id = source.readInt();
+        title = source.readString();
+        note = source.readString();
+        dueDateDay = source.readInt();
+        dueDateMonth = source.readInt();
+        dueDateYear = source.readInt();
+        repeat = source.readBoolean();
+        isStarred = source.readBoolean();
+        myDayDay = source.readInt();
+        myDayMonth = source.readInt();
+        myDayYear = source.readInt();
+    }
+
+    // TODO: FIND OUT WHAT THE FUCK THIS IS??
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(note);
+        dest.writeInt(dueDateDay);
+        dest.writeInt(dueDateMonth);
+        dest.writeInt(dueDateYear);
+        dest.writeBoolean(repeat);
+        dest.writeBoolean(isStarred);
+        dest.writeInt(myDayDay);
+        dest.writeInt(myDayMonth);
+        dest.writeInt(myDayYear);
     }
 
     // Getters
@@ -116,6 +193,10 @@ public class Task implements Serializable {
         return repeat;
     }
 
+    public boolean isStarred() {
+        return isStarred;
+    }
+
     // Setters
 
     /**
@@ -180,4 +261,21 @@ public class Task implements Serializable {
     public void setRepeat(boolean repeat) {
         this.repeat = repeat;
     }
+
+    public void setIsStarred(boolean isStarred) {
+        this.isStarred = isStarred;
+    }
+
+    public void setMyDayDay(int myDayDay) {
+        this.myDayDay = myDayDay;
+    }
+
+    public void setMyDayMonth(int myDayMonth) {
+        this.myDayMonth = myDayMonth;
+    }
+
+    public void setMyDayYear(int myDayYear) {
+        this.myDayYear = myDayYear;
+    }
+
 }

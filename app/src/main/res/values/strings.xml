@@ -5,7 +5,7 @@
     <string name="today_icon_description">Today icon</string>
     <string name="starred_icon_description">Starred icon</string>
     <string name="all_tasks_icon_description">All Tasks icon</string>
-    <string name="today_btn_text">Today</string>
+    <string name="my_day_btn_text">My Day</string>
     <string name="starred_btn_text">Starred</string>
     <string name="all_tasks_btn_text">All Tasks</string>
     <string name="title_activity_tasks">TasksActivity</string>

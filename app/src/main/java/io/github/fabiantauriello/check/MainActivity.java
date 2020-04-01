@@ -43,13 +43,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    private void setupRecyclerView() {
-//        RecyclerView recyclerView = findViewById(R.id.recycler);
-//        final TaskListAdapter adapter = new TaskListAdapter(this, null);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
-
     @Override
     protected void onPause() {
         super.onPause();

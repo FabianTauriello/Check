@@ -1,28 +1,16 @@
 package io.github.fabiantauriello.check;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -31,97 +19,78 @@ import java.util.List;
  */
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    static class TaskViewHolder extends RecyclerView.ViewHolder {
-        private final View taskItemView;
-
-        private TaskViewHolder(View itemView) {
-            super(itemView);
-            taskItemView = itemView;
-        }
-    }
-
     private static final String LOG_TAG = TaskListAdapter.class.getSimpleName();
-    private final LayoutInflater inflater;
-    private List<Task> tasks; // cached copy of tasks
+    private List<Task> dataSet;
+//    private final LayoutInflater inflater;
+    private onTaskClickListener listener;
 
-    /**
-     * Constructor
-     * @param context
-     */
-    public TaskListAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
-//        this.tasks = tasks;
-    }
+    class TaskViewHolder extends RecyclerView.ViewHolder {
+        private ToggleButton taskCheckCircle, taskStar;
+        private TextView taskTitle;
 
-    /**
-     * Called when RecyclerView needs a new ViewHolder of the given type to
-     * represent an item.
-     *
-     * This new ViewHolder should be constructed with a new View that can
-     * represent the items of the given type. A new View can be created
-     * manually or inflate it from an XML layout file.
-     *
-     * The new ViewHolder will be used to display items of the adapter using
-     * onBindViewHolder(ViewHolder, int, List). Since it will be reused to
-     * display different items in the data set, it is a good idea to cache
-     * references to sub views of the View to avoid unnecessary findViewById()
-     * calls.
-     *
-     * @param parent   The ViewGroup into which the new View will be added after
-     *                 it is bound to an adapter position.
-     * @param viewType The view type of the new View. @return A new ViewHolder
-     *                 that holds a View of the given view type.
-     */
-    @Override
-    public TaskListAdapter.TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate an item view.
-        View itemView = inflater.inflate(R.layout.task_list_item, parent, false);
-        return new TaskViewHolder(itemView);
-    }
+        public TaskViewHolder(View card) {
+            super(card);
+            taskCheckCircle = card.findViewById(R.id.task_tick);
+            taskStar = card.findViewById(R.id.task_star);
+            taskTitle = card.findViewById(R.id.task_title);
 
-    /**
-     * Called by RecyclerView to display the data at the specified position.
-     * This method should update the contents of the ViewHolder.itemView to
-     * reflect the item at the given position.
-     *
-     * @param holder   The ViewHolder which should be updated to represent
-     *                 the contents of the item at the given position in the
-     *                 data set.
-     * @param position The position of the item within the adapter's data set.
-     */
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public void onBindViewHolder(TaskListAdapter.TaskViewHolder holder, int position) {
-        Log.d(LOG_TAG, "onBindViewHolder called");
-        if (tasks != null) {
-            Task currentTask = tasks.get(position);
-            TextView title = (TextView) holder.taskItemView.findViewById(R.id.task_title);
-            title.setText(currentTask.getTitle());
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null) {
+                        listener.onTaskClick(dataSet.get(position));
+                    }
+                }
+            });
+        }
 
-        } else {
-            // Covers the case of data not being ready yet.
-            // TODO: write solution for no tasks
+        public TextView getTaskTitle() {
+            return taskTitle;
         }
     }
 
-    // TODO: The getItemCount() method needs to account gracefully for the possibility that the data is not yet ready and mWords is still null.
-    //  In a more sophisticated app, you could display placeholder data or something else that would be meaningful to the user.
+    public interface onTaskClickListener {
+        void onTaskClick(Task task);
+    }
+
+    public void setOnTaskClickListener(onTaskClickListener listener) {
+        this.listener = listener;
+    }
+
+//    public TaskListAdapter(Context context, onTaskClickListener listener) {
+//        inflater = LayoutInflater.from(context);
+//        this.listener = listener;
+//    }
+
+    // Create new views (invoked by the layout manager)
+    @NonNull
+    @Override
+    public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // create a new view
+        View card = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_list_item, parent, false);
+        return new TaskViewHolder(card);
+    }
+
+    // Replace the contents of a view (invoked by the layout manager)
+    @Override
+    public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+        Log.d(LOG_TAG, "onBindViewHolder");
+        // - get element from the dataset at this position
+        // - replace the contents of the view with that element (just title for now...)
+//        holder.getTaskCheckCircle()
+        holder.getTaskTitle().setText(dataSet.get(position).getTitle());
+//        holder.getTaskStar()
+    }
+
     @Override
     public int getItemCount() {
-        if (tasks != null) {
-            return tasks.size();
-        }
-        else return 0;
+        return dataSet == null ? 0 : dataSet.size();
     }
 
-    void setTasks(List<Task> tasks){
-        this.tasks = tasks;
+    public void setTasks(List<Task> dataSet) {
+        this.dataSet = dataSet;
         notifyDataSetChanged();
     }
-
 
 }

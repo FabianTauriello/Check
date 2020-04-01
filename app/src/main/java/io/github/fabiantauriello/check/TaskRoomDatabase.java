@@ -12,7 +12,7 @@ import androidx.room.RoomDatabase;
  * The class is set up as a singleton to prevent having multiple instances of the database opened at the same time.
  */
 
-@Database(entities = {Task.class}, version = 4, exportSchema = false)
+@Database(entities = {Task.class}, version = 1, exportSchema = false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
 
     public abstract TaskDAO taskDAO();

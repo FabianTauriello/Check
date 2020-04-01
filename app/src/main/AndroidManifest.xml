@@ -10,11 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".EditTaskActivity">
+            android:name=".EditTaskActivity"
+            android:label="Edit Task"
+            android:parentActivityName=".TasksActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TasksActivity" />
         </activity>
         <activity
             android:name=".TasksActivity"
-            android:label="Tasks Activity"
+            android:label="Tasks"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

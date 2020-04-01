@@ -16,18 +16,14 @@
         android:layout_height="match_parent"
         android:layout_margin="4dp">
 
-        <ImageButton
+        <ToggleButton
             android:id="@+id/task_tick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
             android:padding="5dp"
-            app:srcCompat="@drawable/ic_task_empty_circle" />
-
-        <!--        <RadioButton-->
-        <!--            android:id="@+id/task_tick"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content" />-->
+            android:background="@drawable/tick_toggle_selector"
+            android:textOff=""
+            android:textOn=""
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
 
         <TextView
             android:id="@+id/task_title"
@@ -35,18 +31,17 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:onClick="editTask"
             android:paddingStart="5dp"
             android:paddingLeft="5dp" />
 
-        <ImageButton
+        <ToggleButton
             android:id="@+id/task_star"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:onClick="starTask"
             android:padding="5dp"
-            app:srcCompat="@drawable/ic_task_empty_star" />
+            android:background="@drawable/star_toggle_selector"
+            android:textOff=""
+            android:textOn=""
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
 
     </LinearLayout>
 

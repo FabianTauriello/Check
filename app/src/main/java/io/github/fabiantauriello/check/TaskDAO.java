@@ -43,4 +43,7 @@ public interface TaskDAO {
      */
     @Query("SELECT * from task_table")
     LiveData<List<Task>> getAllTasks();
+
+    @Query("SELECT * FROM task_table WHERE isStarred = 1")
+    LiveData<List<Task>> getStarredTasks();
 }
