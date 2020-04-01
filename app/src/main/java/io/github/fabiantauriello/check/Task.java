@@ -97,7 +97,7 @@ public class Task implements Parcelable {
         myDayYear = source.readInt();
     }
 
-    // TODO: FIND OUT WHAT THE FUCK THIS IS??
+    // Parcelable is faster than Serialization
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Task createFromParcel(Parcel in) {
             return new Task(in);
