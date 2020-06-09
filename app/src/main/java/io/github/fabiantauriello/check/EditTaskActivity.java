@@ -1,30 +1,27 @@
 package io.github.fabiantauriello.check;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.w3c.dom.Text;
+
+import java.util.Calendar;
 
 public class EditTaskActivity extends AppCompatActivity {
     private static final String LOG_TAG = EditTaskActivity.class.getSimpleName();
 
     public static final String EXTRA_TASK = "io.github.fabiantauriello.check.EXTRA_TASK";
-//    public static final String EXTRA_TITLE = "io.github.fabiantauriello.check.EXTRA_TITLE";
-//    public static final String EXTRA_NOTE = "io.github.fabiantauriello.check.EXTRA_NOTE";
-//    public static final String EXTRA_DUE_DATE_DAY = "io.github.fabiantauriello.check.EXTRA_DUE_DATE_DAY";
-//    public static final String EXTRA_DUE_DATE_MONTH = "io.github.fabiantauriello.check.EXTRA_DUE_DATE_MONTH";
-//    public static final String EXTRA_DUE_DATE_YEAR = "io.github.fabiantauriello.check.EXTRA_DUE_DATE_YEAR";
-//    public static final String EXTRA_REMINDER_DATE_DAY = "io.github.fabiantauriello.check.EXTRA_REMINDER_DATE_DAY";
-//    public static final String EXTRA_REMINDER_DATE_MONTH = "io.github.fabiantauriello.check.EXTRA_REMINDER_DATE_MONTH";
-//    public static final String EXTRA_REMINDER_DATE_YEAR = "io.github.fabiantauriello.check.EXTRA_REMINDER_DATE_YEAR";
-//    public static final String EXTRA_REPEAT = "io.github.fabiantauriello.check.REPEAT";
+
+    private Task taskToEdit;
 
     private EditText taskTitle;
     private TextView taskMyDay;
@@ -48,8 +45,15 @@ public class EditTaskActivity extends AppCompatActivity {
 
         // Get incoming task from intent
         Bundle bundle = getIntent().getExtras();
-        Task taskToEdit = bundle.getParcelable(EXTRA_TASK);
+        taskToEdit = bundle.getParcelable(EXTRA_TASK);
         taskTitle.setText(taskToEdit.getTitle());
+
+        // set up widgets for state of task
+        if (checkIfDatesMatch(taskToEdit.getMyDayValues(), getCurrentDateValues())) {
+            taskMyDay.setText(R.string.edit_added_to_my_day);
+        } else {
+            taskMyDay.setText(R.string.edit_add_to_my_day);
+        }
     }
 
     @Override
@@ -83,12 +87,12 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     // Send data back to TasksActivity
+    // (up arrow)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Log.d(LOG_TAG, "onOptionsItemSelected");
-                updateTask();
                 onBackPressed();
                 return true;
             default:
@@ -97,33 +101,67 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     private void updateTask() {
-        String title = taskTitle.getText().toString();
-//                String myDay = taskMyDay TODO: this will need to be a toggle button i reckon
-        // String dueDate TODO: this will need to be a spinner with a date i reckon
-        // String reminder TODO: this will need to be a spinner with a date i reckon
-        // String repeat TODO: not sure...
-        String note = taskNote.getText().toString();
-//        if(title.trim().isEmpty()) {
-//            Log.d(LOG_TAG, "Title is empty");
-//            Toast.makeText(this, "Please ensure title is not empty", Toast.LENGTH_LONG);
-//            return false; // TODO: check this. might have to be true
-//        }
-
-        Task updatedTask = new Task(title, note, 9, 12, 1990, false, true,
-                1, 23, 1990);
+        Log.d(LOG_TAG, "updateTask");
+        taskToEdit.setTitle(taskTitle.getText().toString());
+        taskToEdit.setNote(taskNote.getText().toString());
 
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_TASK, updatedTask);
+        intent.putExtra(EXTRA_TASK, taskToEdit);
 
         setResult(RESULT_OK, intent);
         finish();
-
     }
 
+    // back button
     @Override
     public void onBackPressed() {
         updateTask();
         super.onBackPressed();
         Log.d(LOG_TAG, "onBackPressed");
+    }
+
+    private boolean checkIfDatesMatch(int[] arg1, int[] arg2) {
+        for (int i = 0; i < arg1.length; i++) {
+            if (arg1[i] != arg2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // TODO: consider putting this (and one above) into a Utility class if it's needed in other classes.
+    // get current date values
+    private int[] getCurrentDateValues() {
+        Calendar currentDate = Calendar.getInstance();
+        int[] result = {
+                currentDate.get(Calendar.DAY_OF_MONTH),
+                currentDate.get(Calendar.MONTH) + 1,
+                currentDate.get(Calendar.YEAR)
+        };
+        return result;
+    }
+
+    public void updateMyDay(View view) {
+        Log.d(LOG_TAG, "updateMyDay");
+
+        // get current date values
+        int[] currentDayValues = getCurrentDateValues();
+
+        if (checkIfDatesMatch(taskToEdit.getMyDayValues(), currentDayValues)) {
+            taskToEdit.setMyDayDay(0);
+            taskToEdit.setMyDayMonth(0);
+            taskToEdit.setMyDayYear(0);
+            ((TextView) view).setText(R.string.edit_add_to_my_day);
+        } else {
+            taskToEdit.setMyDayDay(currentDayValues[0]);
+            taskToEdit.setMyDayMonth(currentDayValues[1]);
+            taskToEdit.setMyDayYear(currentDayValues[2]);
+            ((TextView) view).setText(R.string.edit_added_to_my_day);
+        }
+//        Log.d(LOG_TAG, ((TextView) view).getText().toString());
+    }
+
+    public void processDatePickerResult(int day, int month, int year, String dateString) {
+        taskToEdit.setDueDateDates(day, month, year);
     }
 }

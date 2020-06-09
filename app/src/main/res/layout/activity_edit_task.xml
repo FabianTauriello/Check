@@ -35,8 +35,9 @@
         android:background="@drawable/back"
         android:drawableStart="@drawable/ic_my_day"
         android:drawableLeft="@drawable/ic_my_day"
-        android:hint="Add to My Day"
+        android:text="@string/edit_add_to_my_day"
         android:padding="15dp"
+        android:onClick="updateMyDay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_task_title" />

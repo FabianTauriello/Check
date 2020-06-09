@@ -1,67 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light">
 
     <LinearLayout
         android:id="@+id/frag_task_top_section"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/frag_task_title"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:hint="@string/add_task_title_hint"
-            android:inputType="text" />
+            android:hint="@string/add_task_frag_title_hint"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingLeft="7dp" />
 
         <ImageButton
             android:id="@+id/frag_task_add_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/add_task_btn_description"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/add_task_frag_btn_description"
             app:srcCompat="@drawable/ic_add_task_dialog" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/frag_task_bottom_section"
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frag_task_top_section">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/frag_task_due_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_due_date"
-            android:drawableLeft="@drawable/ic_due_date"
-            android:text="Set due date" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/frag_task_reminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_remind_me"
-            android:drawableLeft="@drawable/ic_remind_me"
-            android:text="@string/add_task_remind_me_text_label" />
+            <LinearLayout
+                android:id="@+id/due_date_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/frag_task_repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableStart="@drawable/ic_repeat"
-            android:drawableLeft="@drawable/ic_repeat"
-            android:text="@string/add_task_repeat_text_label" />
+                <Spinner
+                    android:id="@+id/frag_task_due_date_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:drawable/edit_text" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/frag_task_due_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_due_date"
+                    android:drawableLeft="@drawable/ic_due_date"
+                    android:drawablePadding="-6dp"
+                    android:gravity="center"
+                    android:minHeight="40dp"
+                    android:padding="7dp"
+                    android:text="@string/generic_set_due_date" />
 
-</RelativeLayout>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_clear_due_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_cross" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/reminder_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/frag_task_reminder_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:drawable/edit_text" />
+
+                <TextView
+                    android:id="@+id/frag_task_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_remind_me"
+                    android:drawableLeft="@drawable/ic_remind_me"
+                    android:drawablePadding="-6dp"
+                    android:gravity="center|center_vertical"
+                    android:minHeight="40dp"
+                    android:padding="7dp"
+                    android:text="@string/generic_remind_me" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_clear_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_cross" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/repeat_container"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/frag_task_repeat_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:drawable/edit_text" />
+
+                <TextView
+                    android:id="@+id/frag_task_repeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_repeat"
+                    android:drawableLeft="@drawable/ic_repeat"
+                    android:drawablePadding="-6dp"
+                    android:gravity="center|center_vertical"
+                    android:minHeight="40dp"
+                    android:padding="7dp"
+                    android:text="@string/generic_repeat" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/btn_clear_repeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_cross" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

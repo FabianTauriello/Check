@@ -23,7 +23,7 @@ public class Task implements Parcelable {
     // Member variables
 
     @PrimaryKey(autoGenerate = true)
-    private int id = 1;
+    private int id;
 
     @NonNull
     private String title;
@@ -81,7 +81,7 @@ public class Task implements Parcelable {
         this.myDayYear = myDayYear;
     }
 
-
+    // Parcelable is faster than Serialization
     public Task(Parcel source) {
         // the order needs to be the same as in writeToParcel() method
         id = source.readInt();
@@ -97,7 +97,6 @@ public class Task implements Parcelable {
         myDayYear = source.readInt();
     }
 
-    // Parcelable is faster than Serialization
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Task createFromParcel(Parcel in) {
             return new Task(in);
@@ -197,6 +196,10 @@ public class Task implements Parcelable {
         return isStarred;
     }
 
+    public int[] getMyDayValues() {
+        return new int[] {getMyDayDay(), getMyDayMonth(), getMyDayYear()};
+    }
+
     // Setters
 
     /**
@@ -278,4 +281,27 @@ public class Task implements Parcelable {
         this.myDayYear = myDayYear;
     }
 
+    public void setDueDateDates(int day, int month, int year) {
+        setDueDateDay(day);
+        setDueDateMonth(month);
+        setDueDateYear(year);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\nId = ").append(getId());
+        sb.append("\nTitle = ").append(getTitle());
+        sb.append("\nNote = ").append(getNote());
+        sb.append("\nDue Date Day = ").append(getDueDateDay());
+        sb.append("\nDue Date Month = ").append(getDueDateMonth());
+        sb.append("\nDue Date Year = ").append(getDueDateYear());
+        sb.append("\nRepeat = ").append(isRepeat());
+        sb.append("\nStarred = ").append(isStarred);
+        sb.append("\nMy Day Day = ").append(getMyDayDay());
+        sb.append("\nMy Day Month = ").append(getMyDayMonth());
+        sb.append("\nMy Day Year = ").append(getMyDayYear());
+        return sb.toString();
+    }
 }

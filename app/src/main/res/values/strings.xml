@@ -10,11 +10,46 @@
     <string name="all_tasks_btn_text">All Tasks</string>
     <string name="title_activity_tasks">TasksActivity</string>
 
-    <!-- activity_tasks layout -->
-    <string name="add_task_title_hint">Add a task</string>
-    <string name="add_task_btn_description">Add task arrow</string>
-    <string name="add_task_remind_me_text_label">Remind me</string>
-    <string name="add_task_repeat_text_label">Repeat</string>
+    <!-- fragment_add_task layout -->
+    <string name="add_task_frag_title_hint">Add a task</string>
+    <string name="add_task_frag_btn_description">Add task arrow</string>
+
+    <!-- generic (used in multiple places) -->
+    <string name="generic_set_due_date">Set due date</string>
+    <string name="generic_remind_me">Remind me</string>
+    <string name="generic_repeat">Repeat</string>
+    <string name="spinner_today">Today</string>
+    <string name="spinner_tomorrow">Tomorrow</string>
+    <string name="spinner_next_week">Next Week</string>
+    <string name="spinner_pick_a_date">Pick a date</string>
+    <string name="spinner_none">None</string>
+
+    <string-array name="generic_due_date_array">
+        <item></item>
+        <item>Today</item>
+        <item>Tomorrow</item>
+        <item>Next Week</item>
+        <item>Pick a date</item>
+    </string-array>
+    <string-array name="generic_remind_me_array">
+        <item>Later today</item>
+        <item>Tomorrow</item>
+        <item>Next Week</item>
+        <item>Pick a date and time</item>
+    </string-array>
+    <string-array name="generic_repeat_array">
+        <item>Daily</item>
+        <item>Weekdays</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
+
+    <!-- activity_edit_task layout -->
+    <string name="edit_add_to_my_day">Add to My Day</string>
+    <string name="edit_added_to_my_day">Added to My Day</string>
+
 
 
     <string name="no_tasks">No Tasks</string>

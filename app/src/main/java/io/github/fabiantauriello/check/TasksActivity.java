@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TasksActivity extends AppCompatActivity {
@@ -65,12 +68,14 @@ public class TasksActivity extends AppCompatActivity {
         adapter.setOnTaskClickListener(new TaskListAdapter.onTaskClickListener() {
             @Override
             public void onTaskClick(Task selectedTask) {
-                // Log.d(LOG_TAG, "selectedTask selected: " + Integer.toString(selectedTask.getId()));
+//                Log.d(LOG_TAG, "task about to be edited..." + selectedTask);
                 Intent intent = new Intent(TasksActivity.this, EditTaskActivity.class);
                 intent.putExtra(EditTaskActivity.EXTRA_TASK, selectedTask);
                 startActivityForResult(intent, EDIT_TASK_REQUEST_CODE);
             }
         });
+
+
 
     }
 
@@ -102,7 +107,6 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void toggleVisibilityOfFragment(boolean show) {
-
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction(); // start fragment transaction
 
         // show/hide fragment
@@ -124,23 +128,18 @@ public class TasksActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(LOG_TAG, "result code... " + Integer.toString(resultCode));
         if(requestCode == EDIT_TASK_REQUEST_CODE) {
-            Log.d(LOG_TAG, "Task changed");
-
-            Task updatedTask = (Task) data.getExtras().getParcelable(EditTaskActivity.EXTRA_TASK);
-            Log.d(LOG_TAG,"Update task: id = " + Integer.toString(updatedTask.getId()) + ". title = " + updatedTask.getTitle());
-            Log.d(LOG_TAG, "--------------");
-            showTasks();
-            Log.d(LOG_TAG, "--------------");
-            taskViewModel.delete(updatedTask);
-            Log.d(LOG_TAG, "--------------");
-            showTasks();
+            Task updatedTask = data.getExtras().getParcelable(EditTaskActivity.EXTRA_TASK);
+//            Log.d(LOG_TAG, "task edited..." + updatedTask);
+            taskViewModel.update(updatedTask);
         } else {
             Log.d(LOG_TAG, "Task was deleted");
         }
-
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -169,6 +168,7 @@ public class TasksActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(LOG_TAG, "onResume");
+
     }
 
     @Override
@@ -183,13 +183,13 @@ public class TasksActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "onDestroy");
     }
 
-    public void showTasks() {
-        Log.d(LOG_TAG, "Do shit");
-        LiveData<List<Task>> stuff = taskViewModel.getAllTasks();
-        Log.d(LOG_TAG, "Number of tasks: " + stuff.getValue().size());
-        for (int i = 0; i < stuff.getValue().size(); i++){
-            Log.d(LOG_TAG, "id: " + stuff.getValue().get(i).getId());
-            Log.d(LOG_TAG, "title: " + stuff.getValue().get(i).getTitle());
+    private void logAllTasks() {
+        LiveData<List<Task>> allTasks = taskViewModel.getAllTasks();
+        List<Task> value = allTasks.getValue();
+        if (value != null) {
+            for (Task task : value) {
+                Log.d(LOG_TAG, task.toString());
+            }
         }
     }
 
